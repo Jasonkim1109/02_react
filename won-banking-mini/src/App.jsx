@@ -4,8 +4,9 @@ import Clock from './components/Clock.jsx'
 import Panel from './components/panel.jsx'
 import AccountCard from './components/accountCard.jsx'
 import Header from './components/header.jsx'
-import Counter from './components/Counter.jsx'
-import { useState } from 'react';
+import TransactionRow from './components/TransactionRow.jsx'
+import { transactions } from './data/mockData.js'
+import { useState } from 'react'
 // 02_html기초.html 안에 만들었던 계좌카드의 css를 가져와서
 // 아래에 있는 카드를 좀더 그럴듯하게 꾸며보세요.
 // 실제로 사용될 화면을 그립니다.
@@ -45,6 +46,7 @@ function App() {
   // flag 변수를 사용할 때는 default 값을 false로 만들고 시작하는 로직을 권장 
   const [showFullNo, setShowFullNo] = useState(false);
   //     ↑현재 값      ↑바꾸는 함수              ↑처음값
+  const [showAmount, setShowAmount] = useState(false)
   // XML에서는 여는 꺽쇠 안의 태그가 무엇이든 될 수 있기 때문에 <이름>김연지 </이름>
   // JSX 가 소문자 태그는 HTML, 대문자로 시작하는 태그는 컴포넌트로 인식
   // return ( ) 바깥에서는 일반 자바스크립트처럼 // 로 주석을 적습니다.
@@ -56,18 +58,28 @@ function App() {
     <button onClick={() => setShowFullNo(!showFullNo)}>
       {showFullNo ? "계좌번호 숨기기" : "계좌번호 보기"}
     </button>
+      <button onClick={() => setShowAmount(!showAmount)}>
+      {showAmount ? "금액 숨기기" : "금액 보기"}
+    </button>
+    
     <Panel title={"내 계좌"}>
-      <Counter/>
         <AccountCard accountNo={accounts[0].accountNo}
                   accountType={accounts[0].accountType} 
                   balance={accounts[0].balance}
               status={accounts[0].status}
-              showFullNo={showFullNo}/>
+              showFullNo={showFullNo}
+              showAmount={showAmount}/>
       <AccountCard accountNo={accounts[1].accountNo}
           accountType={accounts[1].accountType}
           balance={accounts[1].balance}
           status={accounts[1].status}
-          showFullNo={showFullNo}/>
+          showFullNo={showFullNo}
+          showAmount={showAmount}/>
+    </Panel>
+    <Panel title="최근 거래">
+      {transactions.map((transaction, index) => (
+        <TransactionRow key={`${transaction.txDatetime}-${index}`} {...transaction} />
+      ))}
     </Panel>
     </>
   );

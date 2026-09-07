@@ -36,3 +36,30 @@ h1 {
   color: #8b8f98;
   font-size: 13px;
 }
+
+.transaction-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #eceef1;
+}
+
+.transaction-row:last-child {
+  border-bottom: 0;
+}
+
+.transaction-row p {
+  margin: 6px 0;
+}
+
+.deposit {
+  color: #16834b;
+  white-space: nowrap;
+}
+
+.withdrawal {
+  color: #d34242;
+  white-space: nowrap;
+}
