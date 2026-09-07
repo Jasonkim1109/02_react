@@ -5,80 +5,68 @@ import Panel from './components/panel.jsx'
 import AccountCard from './components/accountCard.jsx'
 import Header from './components/header.jsx'
 import TransactionRow from './components/TransactionRow.jsx'
-import { transactions } from './data/mockData.js'
+import { accounts as initialAccounts, transactions } from './data/mockData.js'
+import { formatWonMasked } from './utils/format.js'
 import { useState } from 'react'
 // 02_html기초.html 안에 만들었던 계좌카드의 css를 가져와서
 // 아래에 있는 카드를 좀더 그럴듯하게 꾸며보세요.
 // 실제로 사용될 화면을 그립니다.
 function App() {
   
-  // 화면이 렌더링 되기 위해 필요로 하는 값(data)을 적습니다.
-  // 1. 데이터
-  // 계좌 목록 (실제 서비스에서는 백엔드 DB에서 내려오는 데이터가 뿌려집니다)
-  const accounts = [
-    {
-      accountId: 1,
-      accountNo: "1002-345-678901", // 
-      accountType: "입출금", // 
-      balance: 1523000, // 
-      status: "정상",
-      ownerName: "김연지", // 
-    },
-    {
-      accountId: 2,
-      accountNo: "1002-345-112233",
-      accountType: "적금",
-      balance: 1200000,
-      status: "정상",
-      ownerName: "김연지",
-    },
-    {
-      accountId: 3,
-      accountNo: "1002-345-998877",
-      accountType: "적금",
-      balance: 397000,
-      status: "휴면",
-      ownerName: "김연지",
-    },
-  ]
-
-  // flag 변수: 깃발을 들어서 교통량을 제어하는 것처럼 이 변수의 역할은 특정 로직을 끄거나 켜거나 밖에 없기 때문에
-  // flag 변수를 사용할 때는 default 값을 false로 만들고 시작하는 로직을 권장 
+  const [accounts, setAccounts] = useState(initialAccounts)
   const [showFullNo, setShowFullNo] = useState(false);
-  //     ↑현재 값      ↑바꾸는 함수              ↑처음값
   const [showAmount, setShowAmount] = useState(false)
-  // XML에서는 여는 꺽쇠 안의 태그가 무엇이든 될 수 있기 때문에 <이름>김연지 </이름>
-  // JSX 가 소문자 태그는 HTML, 대문자로 시작하는 태그는 컴포넌트로 인식
-  // return ( ) 바깥에서는 일반 자바스크립트처럼 // 로 주석을 적습니다.
-  // return 뒤에 렌더링 될 부분을 적습니다.
+  const totalAssets = accounts.reduce((total, account) => total + account.balance, 0)
+
+  function handleDeposit(accountId) {
+    setAccounts((currentAccounts) => currentAccounts.map((account) => (
+      account.accountId === accountId
+        ? { ...account, balance: account.balance + 10000 }
+        : account
+    )))
+  }
+
   return (
     <> 
     <Clock/>
     <Header/>
-    <button onClick={() => setShowFullNo(!showFullNo)}>
+    <div className="controls">
+      <button onClick={() => setShowFullNo(!showFullNo)}>
       {showFullNo ? "계좌번호 숨기기" : "계좌번호 보기"}
-    </button>
-      <button onClick={() => setShowAmount(!showAmount)}>
-      {showAmount ? "금액 숨기기" : "금액 보기"}
-    </button>
+      </button>
+      <button
+        className="eye-button"
+        onClick={() => setShowAmount(!showAmount)}
+        aria-label={showAmount ? "금액 숨기기" : "금액 보이기"}
+        title={showAmount ? "금액 숨기기" : "금액 보이기"}
+      >
+        👁
+      </button>
+    </div>
+
+    <Panel title="총 자산">
+      <strong className="total-assets">
+        {formatWonMasked(totalAssets, !showAmount)}
+      </strong>
+    </Panel>
     
-    <Panel title={"내 계좌"}>
-        <AccountCard accountNo={accounts[0].accountNo}
-                  accountType={accounts[0].accountType} 
-                  balance={accounts[0].balance}
-              status={accounts[0].status}
-              showFullNo={showFullNo}
-              showAmount={showAmount}/>
-      <AccountCard accountNo={accounts[1].accountNo}
-          accountType={accounts[1].accountType}
-          balance={accounts[1].balance}
-          status={accounts[1].status}
+    <Panel title="내 계좌">
+      {accounts.map((account) => (
+        <AccountCard
+          key={account.accountId}
+          {...account}
           showFullNo={showFullNo}
-          showAmount={showAmount}/>
+          showAmount={showAmount}
+          onDeposit={() => handleDeposit(account.accountId)}
+        />
+      ))}
     </Panel>
     <Panel title="최근 거래">
       {transactions.map((transaction, index) => (
-        <TransactionRow key={`${transaction.txDatetime}-${index}`} {...transaction} />
+        <TransactionRow
+          key={`${transaction.txDatetime}-${index}`}
+          {...transaction}
+        />
       ))}
     </Panel>
     </>

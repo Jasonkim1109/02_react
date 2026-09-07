@@ -19,6 +19,19 @@ h1 {
   margin: 0 0 20px;
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.eye-button {
+  min-width: 40px;
+  padding: 6px 10px;
+  font-size: 18px;
+}
+
 .card {
   background: #ffffff;
   border-radius: 16px;
@@ -32,34 +45,50 @@ h1 {
   font-weight: 700;
 }
 
+.total-assets {
+  display: block;
+  font-size: 24px;
+}
+
+.deposit-button {
+  display: block;
+  margin-top: 12px;
+}
+
 .muted {
   color: #8b8f98;
   font-size: 13px;
 }
 
-.transaction-row {
+.tx-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 16px 0;
+  gap: 20px;
+  padding: 20px 4px;
   border-bottom: 1px solid #eceef1;
 }
 
-.transaction-row:last-child {
+.tx-row:last-child {
   border-bottom: 0;
 }
 
-.transaction-row p {
-  margin: 6px 0;
+.tx-row > div:last-child {
+  min-width: 108px;
+  text-align: right;
 }
 
-.deposit {
+.tx-row > div:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.amount-in {
   color: #16834b;
   white-space: nowrap;
 }
 
-.withdrawal {
+.amount-out {
   color: #d34242;
   white-space: nowrap;
 }

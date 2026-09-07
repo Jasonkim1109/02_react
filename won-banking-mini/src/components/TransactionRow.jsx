@@ -9,19 +9,23 @@ function TransactionRow({
 	txDatetime,
 }) {
 	return (
-		<article className="transaction-row">
+		<div className="tx-row">
 			<div>
 				<strong>{counterparty}</strong>
-				<p>{memo}</p>
+				<br />
 				<span className="muted">
-					{category} · {txDatetime}
+					{category} · {memo}
 				</span>
 			</div>
-			<strong className={txType === "입금" ? "deposit" : "withdrawal"}>
-				{txType === "입금" ? "+" : "-"}
-				{formatWon(amount)}
-			</strong>
-		</article>
+			<div>
+				<strong className={txType === "입금" ? "amount-in" : "amount-out"}>
+					{txType === "입금" ? "+" : "-"}
+					{formatWon(amount)}
+				</strong>
+				<br />
+				<span className="muted">{txDatetime.slice(11, 16)}</span>
+			</div>
+		</div>
 	);
 }
 
