@@ -95,22 +95,31 @@ header h1 {
   margin: 0 0 8px;
 }
 
-/* 맨 위 총 자산 카드 */
-.total {
-  background: var(--brand);
+/* 맨 위 총 자산 패널 */
+.panel.total {
+  background: #6d3ccf;
   color: #ffffff;
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 20px;
 }
 
-.total .muted {
+.panel.total h2 {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.panel.total .muted {
   color: rgba(255, 255, 255, 0.7);
   font-size: 12px;
 }
 
-.total .balance {
+.panel.total .balance {
   color: #ffffff;
+}
+
+.panel.total .total-assets {
+  display: block;
+  font-size: 24px;
 }
 
 /* 거래 내역 한 줄 */
