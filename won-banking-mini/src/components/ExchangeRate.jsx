@@ -9,9 +9,6 @@ function ExchangeRate() {
   
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-
     // fetch는 data를 API를 호출해서 가져오는 JS의 비동기 함수
     fetch("https://open.er-api.com/v6/latest/USD")
       .then((res) => {
@@ -27,7 +24,11 @@ function ExchangeRate() {
   if (error) return (<>
                     <p className="muted">환율을 못 불러왔습니다</p>
                     {/* reloadKey - useEffect의 결과를 넘깁니다. */}
-                    <button onClick={() => setReloadKey((key) => key + 1)}>다시 시도 {reloadKey} </button>
+                    <button onClick={() => {
+                      setLoading(true);
+                      setError(null);
+                      setReloadKey((key) => key + 1);
+                    }}>다시 시도 {reloadKey} </button>
                     </>);
   return <p>1달러 = {Math.round(rate).toLocaleString("ko-KR")}원</p>;
 }

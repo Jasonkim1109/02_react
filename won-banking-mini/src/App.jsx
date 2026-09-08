@@ -4,10 +4,8 @@ import Clock from './components/Clock.jsx'
 import Panel from './components/Panel.jsx'
 import AccountCard  from './components/AccountCard.jsx'
 import Header from './components/Header'
-import Counter from './components/Counter.jsx'
 import { useState } from 'react'
-import TransactionRow from './components/TransactionRow.jsx'
-import { transactions } from './data/mockData'
+import TransactionList from './components/TransactionList.jsx'
 import { formatWon } from './utils/format.js'
 import ExchangeRate from './components/ExchangeRate.jsx'
 
@@ -117,37 +115,8 @@ function App() {
         ))}
     </Panel>
 
-    {/* map()과 key, spread연산자로 가지고 있는 집합자료형의 모든 자료를 화면에 
-    반복해서 돌면서 풀어헤칩니다.
-    1. spread 연산자로 전체 key/value를 퉁쳐버리면 props 에 처음에 받았던 값들만 사용합니다.
-    2. 어디에 무슨 변수가 들어가는지 확인이 불가합니다.  
-    txType, amount, category, memo, counterparty, txDatetime, hideAmount  */}
-
     <Panel title="최근 거래">
-      {transactions.map((tx) => (
-        <TransactionRow key={tx.txId} {...tx} />
-      ))}
-    </Panel>
-
-    <Panel title="최근 거래">
-      <TransactionRow 
-        counterparty={transactions[0].counterparty} 
-        txType={transactions[0].txType}
-        amount={transactions[0].amount}
-        category={transactions[0].category}
-        memo={transactions[0].memo}
-        txDatetime={transactions[0].txDatetime}
-        hideAmount={showAmount}
-        />
-
-        <TransactionRow 
-        counterparty={transactions[1].counterparty} 
-        txType={transactions[1].txType}
-        amount={transactions[1].amount}
-        category={transactions[1].category}
-        memo={transactions[1].memo}
-        txDatetime={transactions[1].txDatetime}
-        />
+      <TransactionList hideAmount={!showAmount} />
     </Panel>
 
     <Panel title="오늘의 환율"> 
