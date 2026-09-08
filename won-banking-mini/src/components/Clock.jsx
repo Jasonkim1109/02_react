@@ -6,15 +6,15 @@ import { useEffect, useState } from 'react'
 // 일반 함수와 구분해서 JSX에서 이해하도록 
 // 컴포넌트 명은 대문자로 시작하는 파스칼케이스를 따릅니다.
 function Clock() {
-  const [now, setNow] = useState(new Date())
+  const [now, setNow] = useState(new Date());
 
   useEffect(() => {
-    const timerId = setInterval(() => setNow(new Date()), 1000)
+    const id = setInterval(() => setNow(new Date()), 1000);
+    console.log(id)
+    return () => clearInterval(id);   // 정리 함수
+  }, []);
 
-    return () => clearInterval(timerId)
-  }, [])
-
-  return <span>{now.toLocaleTimeString('ko-KR')}</span>
+  return <span className="muted">{now.toLocaleTimeString("ko-KR")}</span>;
 }
 
 export default Clock
