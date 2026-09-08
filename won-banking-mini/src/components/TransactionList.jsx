@@ -16,7 +16,10 @@ function TransactionList({ hideAmount = false }) {
         (selectedType === "전체" || tx.txType === selectedType) &&
         (selectedCategory === "전체" || tx.category === selectedCategory)
     ));
-    const visibleTotal = visibleTransactions.reduce((sum, tx) => sum + tx.amount, 0);
+    const visibleTotal = visibleTransactions.reduce(
+        (sum, tx) => sum + (tx.txType === "입금" ? tx.amount : -tx.amount),
+        0
+    );
     const summaryLabel = selectedType === "전체" ? "전체" : selectedType;
 
     return (
@@ -50,7 +53,7 @@ function TransactionList({ hideAmount = false }) {
                 </div>
             </div>
             <p className="transaction-summary">
-                {summaryLabel} {visibleTransactions.length}건 · 합계 {formatWon(visibleTotal)}
+                {summaryLabel} {visibleTransactions.length}건 · 합계 {formatWon(Math.abs(visibleTotal))}
             </p>
             {visibleTransactions.length > 0 ? (
                 visibleTransactions.map((tx) => (
