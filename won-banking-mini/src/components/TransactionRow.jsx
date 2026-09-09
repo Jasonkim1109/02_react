@@ -1,4 +1,4 @@
-import { formatWonMasked } from "../utils/format.js"
+  import { formatWonMasked } from "../utils/format.js"
 
 // 거래 내역 한 줄을 보여주는 컴포넌트
 function TransactionRow({ txType, amount, category, memo, counterparty, txDatetime, hideAmount }) {
