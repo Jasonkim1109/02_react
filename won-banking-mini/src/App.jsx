@@ -1,14 +1,14 @@
 // 필요한 부품들을 불러옵니다.
 import './App.css'
 import Clock from './components/Clock.jsx'
-import Panel from './components/Panel.jsx'
-import AccountCard  from './components/AccountCard.jsx'
-import Header from './components/Header'
+import Panel from './components/panel.jsx'
+import AccountCard from './components/accountCard.jsx'
+import Header from './components/header.jsx'
 import { useState } from 'react'
 import TransactionList from './components/TransactionList.jsx'
 import { formatWon } from './utils/format.js'
 import ExchangeRate from './components/ExchangeRate.jsx'
-
+import { UserProvider } from './contexts/UserContext.jsx'
 // 02_html기초.html 안에 만들었던 계좌카드의 css를 가져와서
 // 아래에 있는 카드를 좀더 그럴듯하게 꾸며보세요.
 // 실제로 사용될 화면을 그립니다.
@@ -24,7 +24,7 @@ function App() {
       accountType: "입출금", // 
       balance: 1523000, // 
       status: "지급정지", //
-      ownerName: "김연지", // 
+      ownerName: "김재홍", // 
     },
     {
       accountId: 2,
@@ -32,7 +32,7 @@ function App() {
       accountType: "적금",
       balance: 1200000,
       status: "정상",
-      ownerName: "김연지",
+      ownerName: "김재홍",
     },
     {
       accountId: 3,
@@ -40,7 +40,7 @@ function App() {
       accountType: "적금",
       balance: 397000,
       status: "휴면",
-      ownerName: "김연지",
+      ownerName: "김재홍",
     },
   ]
 
@@ -73,11 +73,12 @@ function App() {
   // App에서 매번 다시 계산하는 변수
   const totalBalance = accounts[0].balance + accounts[1].balance + accounts[2].balance
 
-  // XML에서는 여는 꺽쇠 안의 태그가 무엇이든 될 수 있기 때문에 <이름>김연지 </이름>
+  // XML에서는 여는 꺽쇠 안의 태그가 무엇이든 될 수 있기 때문에 <이름>김재홍 </이름>
   // JSX 가 소문자 태그는 HTML, 대문자로 시작하는 태그는 컴포넌트로 인식
   // return ( ) 바깥에서는 일반 자바스크립트처럼 // 로 주석을 적습니다.
   // return 뒤에 렌더링 될 부분을 적습니다.
   return (
+    <UserProvider user={{ name: "김재홍", grade: "우수" }}>
     <> 
     <Header />
 
@@ -101,7 +102,7 @@ function App() {
     </div>
     {/* 사용 */}
 
-    <Panel title="내 계좌">
+    <Panel title={`${accounts[0].ownerName}의 계좌`}>
       {accounts.map((account) => (
         <AccountCard key={account.accountId} 
                     showFullNo={showFullNo}
@@ -123,6 +124,7 @@ function App() {
      <ExchangeRate />
     </Panel>
     </>
+    </UserProvider>
   );
 }
 

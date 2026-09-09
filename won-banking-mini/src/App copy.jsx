@@ -41,7 +41,7 @@ function App() {
       accountType: "입출금", // 
       balance: 1523000, // 
       status: "정상",
-      ownerName: "김연지", // 
+      ownerName: "김재홍", //
     },
     {
       accountId: 2,
@@ -49,7 +49,7 @@ function App() {
       accountType: "적금",
       balance: 1200000,
       status: "정상",
-      ownerName: "김연지",
+      ownerName: "김재홍",
     },
     {
       accountId: 3,
@@ -57,7 +57,7 @@ function App() {
       accountType: "적금",
       balance: 397000,
       status: "휴면",
-      ownerName: "김연지",
+      ownerName: "김재홍",
     },
   ]
 
@@ -65,7 +65,7 @@ function App() {
   // flag 변수를 사용할 때는 default 값을 false로 만들고 시작하는 로직을 권장 
   let showFullNo = true
   
-  // XML에서는 여는 꺽쇠 안의 태그가 무엇이든 될 수 있기 때문에 <이름>김연지 </이름>
+  // XML에서는 여는 꺽쇠 안의 태그가 무엇이든 될 수 있기 때문에 <이름>김재홍 </이름>
   // JSX 가 소문자 태그는 HTML, 대문자로 시작하는 태그는 컴포넌트로 인식
   // return ( ) 바깥에서는 일반 자바스크립트처럼 // 로 주석을 적습니다.
   // return 뒤에 렌더링 될 부분을 적습니다.
